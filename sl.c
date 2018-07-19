@@ -43,6 +43,7 @@
 
 void add_smoke(int y, int x);
 void add_man(int y, int x);
+void add_fumikiri(int y, int x);
 int add_C51(int x);
 int add_D51(int x);
 int add_sl(int x);
@@ -50,6 +51,7 @@ void option(char *str);
 int my_mvaddstr(int y, int x, char *str);
 
 int ACCIDENT  = 0;
+int FUMIKIRI  = 0;
 int LOGO      = 0;
 int FLY       = 0;
 int C51       = 0;
@@ -73,6 +75,7 @@ void option(char *str)
             case 'F': FLY      = 1; break;
             case 'l': LOGO     = 1; break;
             case 'c': C51      = 1; break;
+            case 'f': FUMIKIRI = 1; break;
             default:                break;
         }
     }
@@ -150,6 +153,11 @@ int add_sl(int x)
         add_man(y + 1 + py2, x + 45);  add_man(y + 1 + py2, x + 53);
         add_man(y + 1 + py3, x + 66);  add_man(y + 1 + py3, x + 74);
     }
+    if (FUMIKIRI == 1) {
+        add_fumikiri(y + 1, x + 14);
+        add_fumikiri(y + 1 + py2, x + 45);  add_fumikiri(y + 1 + py2, x + 53);
+        add_fumikiri(y + 1 + py3, x + 66);  add_fumikiri(y + 1 + py3, x + 74);
+    }
     add_smoke(y - 1, x + LOGOFUNNEL);
     return OK;
 }
@@ -191,6 +199,10 @@ int add_D51(int x)
         add_man(y + 2, x + 43);
         add_man(y + 2, x + 47);
     }
+    if (FUMIKIRI == 1) {
+        add_fumikiri(y + 2, x + 43);
+        add_fumikiri(y + 2, x + 47);
+    }
     add_smoke(y - 1, x + D51FUNNEL);
     return OK;
 }
@@ -231,6 +243,10 @@ int add_C51(int x)
         add_man(y + 3, x + 45);
         add_man(y + 3, x + 49);
     }
+    if (FUMIKIRI == 1) {
+        add_fumikiri(y + 3, x + 45);
+        add_fumikiri(y + 3, x + 49);
+    }
     add_smoke(y - 1, x + C51FUNNEL);
     return OK;
 }
@@ -245,6 +261,38 @@ void add_man(int y, int x)
         my_mvaddstr(y + i, x, man[(LOGOLENGTH + x) / 12 % 2][i]);
     }
 }
+
+void add_fumikiri(int y, int x)
+{
+    static char *fumikiri[2][8] = {
+              {
+                " _   _",
+                " \\_\\/_/",
+                " /_/\\_\\",
+                "( ) I (O)",
+                "    I    ",
+                "    I    ",
+                "    I    ",
+                "    I    "
+              },
+              {
+                " _   _",
+                " \\_\\/_/",
+                " /_/\\_\\",
+                "(O) I ( )",
+                "    I    ",
+                "    I    ",
+                "    I    ",
+                "    I    "
+              }
+    };
+    int i;
+
+    for (i = 0; i < 8; ++i) {
+        my_mvaddstr(y + i, 10, fumikiri[(LOGOLENGTH + x) / 12 % 2][i]);
+    }
+}
+
 
 
 void add_smoke(int y, int x)
